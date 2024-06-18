@@ -7,7 +7,6 @@ import io.hhplus.tdd.point.dto.ChargeUserPointDto;
 import io.hhplus.tdd.point.dto.GetUserPointDto;
 import io.hhplus.tdd.point.dto.GetUserPointHistoriesDto;
 import io.hhplus.tdd.point.dto.UseUserPointDto;
-import io.hhplus.tdd.point.service.CommonPointServiceImpl;
 import io.hhplus.tdd.point.service.PointService;
 import io.hhplus.tdd.repository.UserPointRepository;
 import org.assertj.core.api.Assertions;
@@ -149,9 +148,9 @@ public class PointServiceTest {
 
     }
     @Test
-    public void 유저포인트_사용_실패() throws Exception {
+    public void 유저포인트_사용_실패_많은포인트() throws Exception {
         // given
-        // 100포인트를 사용하는 것으로 가정
+        // 50포인트 가지고 있는 사람이 100포인트를 사용하는 것으로 가정
         long id = 4L;
         UseUserPointDto.Request request
                 = UseUserPointDto.Request.builder()
@@ -172,6 +171,31 @@ public class PointServiceTest {
         PointHistory pointHistory = pointHistories.get(0);
 
         Assertions.assertThat(pointHistory).isEqualTo(new PointHistory(pointHistory.id(), 5L, 80L, TransactionType.USE, pointHistory.updateMillis()));
+    }
 
+    @Test
+    public void 유저포인트_사용_실패_음수포인트() throws Exception {
+        // given
+        // -20포인트를 사용하는 것으로 가정
+        long id = 4L;
+        UseUserPointDto.Request request
+                = UseUserPointDto.Request.builder()
+                .amount(-20L)
+                .build();
+
+        // when
+        UseUserPointDto.Response res = this.pointService.useUserPoint(5L, request);
+
+        // then
+        // Service 함수의 실패케이스를 작성하는데 밑의 검증 단계가 필요한지 질문 필요
+        // 유저 포인트 충전 제대로 됐는지 검증
+        Assertions.assertThat(res.id()).isEqualTo(5L);
+        Assertions.assertThat(res.point()).isEqualTo(200L);
+
+        // 포인트 히스토리 제대로 쌓였는지 검증
+        List<PointHistory> pointHistories = pointHistoryTable.selectAllByUserId(4L);
+        PointHistory pointHistory = pointHistories.get(0);
+
+        Assertions.assertThat(pointHistory).isEqualTo(new PointHistory(pointHistory.id(), 5L, -20L, TransactionType.USE, pointHistory.updateMillis()));
     }
 }
