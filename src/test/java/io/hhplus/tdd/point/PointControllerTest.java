@@ -2,8 +2,9 @@ package io.hhplus.tdd.point;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.hhplus.tdd.dto.ChargeUserPointDto;
-import io.hhplus.tdd.dto.UseUserPointDto;
+import io.hhplus.tdd.point.controller.PointController;
+import io.hhplus.tdd.point.dto.ChargeUserPointDto;
+import io.hhplus.tdd.point.dto.UseUserPointDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
