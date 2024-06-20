@@ -8,7 +8,7 @@ import io.hhplus.tdd.point.dto.GetUserPointDto;
 import io.hhplus.tdd.point.dto.GetUserPointHistoriesDto;
 import io.hhplus.tdd.point.dto.UseUserPointDto;
 import io.hhplus.tdd.point.service.PointService;
-import io.hhplus.tdd.repository.UserPointRepository;
+import io.hhplus.tdd.point.repository.UserPointRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

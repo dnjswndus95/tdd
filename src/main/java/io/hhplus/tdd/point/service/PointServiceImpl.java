@@ -16,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.concurrent.locks.Lock;
 
 @Service
 @RequiredArgsConstructor
@@ -87,7 +86,7 @@ public class PointServiceImpl implements PointService {
     }
 
     @Override
-    public UseUserPointDto.Response useUserPoint(long id, UseUserPointDto.Request request) throws Exception{
+    public UseUserPointDto.Response useUserPoint(long id, UseUserPointDto.Request request) throws Exception {
         return lockManager.executeOnLock(id, () -> {
             try {
                 // 해당 id로 된 UserPoint 검색
