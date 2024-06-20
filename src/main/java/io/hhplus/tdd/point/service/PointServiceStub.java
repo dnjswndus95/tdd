@@ -1,5 +1,6 @@
 package io.hhplus.tdd.point.service;
 
+import io.hhplus.tdd.point.PointHistory;
 import io.hhplus.tdd.point.TransactionType;
 import io.hhplus.tdd.point.UserPoint;
 import io.hhplus.tdd.point.dto.ChargeUserPointDto;
@@ -8,15 +9,20 @@ import io.hhplus.tdd.point.dto.GetUserPointHistoriesDto;
 import io.hhplus.tdd.point.dto.UseUserPointDto;
 import io.hhplus.tdd.point.feature.PointFeature;
 import io.hhplus.tdd.point.feature.PointFeatureImpl;
+import io.hhplus.tdd.point.repository.UserPointHistoryRepositoryStub;
 import io.hhplus.tdd.point.repository.UserPointRepositoryStub;
+
+import java.util.List;
 
 public class PointServiceStub implements PointService {
 
     private UserPointRepositoryStub userPointRepositoryStub = new UserPointRepositoryStub();
+    private UserPointHistoryRepositoryStub userPointHistoryRepositoryStub = new UserPointHistoryRepositoryStub();
     private PointFeature pointFeature = new PointFeatureImpl();
 
     @Override
     public GetUserPointDto.Response getUserPoint(long id) throws Exception {
+
         UserPoint findUserPoint = userPointRepositoryStub.findByUserId(id);
 
         return GetUserPointDto.Response.builder()
@@ -28,7 +34,11 @@ public class PointServiceStub implements PointService {
 
     @Override
     public GetUserPointHistoriesDto.Response getUserPointHistories(long id) {
-        return null;
+        List<PointHistory> findUserPointHistories = userPointHistoryRepositoryStub.getUserPointHistories(id);
+
+        return GetUserPointHistoriesDto.Response.builder()
+                .userPointHistories(findUserPointHistories)
+                .build();
     }
 
     @Override

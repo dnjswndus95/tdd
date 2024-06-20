@@ -1,4 +1,4 @@
-package io.hhplus.tdd.repository;
+package io.hhplus.tdd.point.repository;
 
 import io.hhplus.tdd.database.UserPointTable;
 import io.hhplus.tdd.point.UserPoint;
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @RequiredArgsConstructor
 @Repository
-public class UserRepositoryImpl implements UserPointRepository {
+public class UserPointRepositoryImpl implements UserPointRepository {
 
     private final UserPointTable userPointTable;
 

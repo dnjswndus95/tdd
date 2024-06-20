@@ -2,11 +2,15 @@ package io.hhplus.tdd.point;
 
 import io.hhplus.tdd.point.dto.ChargeUserPointDto;
 import io.hhplus.tdd.point.dto.GetUserPointDto;
+import io.hhplus.tdd.point.dto.GetUserPointHistoriesDto;
 import io.hhplus.tdd.point.dto.UseUserPointDto;
 import io.hhplus.tdd.point.service.PointServiceStub;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -97,5 +101,18 @@ public class PointServiceTest {
         Assertions.assertThat(exception.getMessage()).isEqualTo("사용 포인트는 양수여야 합니다.");
     }
 
+    @Test
+    public void 포인트사용히스토리_조회() throws Exception {
+        // given
+        Long id = 1L;
+        List<PointHistory> pointHistories = new ArrayList<>();
+        pointHistories.add(new PointHistory(1L, 1L, 20L, TransactionType.CHARGE, System.currentTimeMillis()));
+        pointHistories.add(new PointHistory(2L, 1L, 10L, TransactionType.USE, System.currentTimeMillis()));
 
+        GetUserPointHistoriesDto.Response response = pointServiceStub.getUserPointHistories(id);
+
+        assertNotNull(response.userPointHistories());
+        Assertions.assertThat(response.userPointHistories()).isEqualTo(pointHistories);
+
+    }
 }

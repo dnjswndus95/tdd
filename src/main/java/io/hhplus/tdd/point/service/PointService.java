@@ -6,7 +6,6 @@ import io.hhplus.tdd.point.dto.GetUserPointHistoriesDto;
 import io.hhplus.tdd.point.dto.UseUserPointDto;
 import org.springframework.stereotype.Service;
 
-@Service
 public interface PointService {
 
     public GetUserPointDto.Response getUserPoint(long id) throws Exception;
